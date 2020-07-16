@@ -5,7 +5,7 @@ import argparse
 import numpy as np
 import torch
 
-from spatial_correlation_sampler import SpatialCorrelationSampler
+from spatial_correlation_sampler_featurewise import SpatialCorrelationSampler
 
 
 def check_equal(first, second, verbose):

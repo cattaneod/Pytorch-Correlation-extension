@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension, CppExtension
 from os.path import join
 
@@ -23,24 +23,22 @@ def launch_setup():
     sources = [join(project_root, file) for file in source_files]
 
     setup(
-        name='spatial_correlation_sampler',
-        version="0.2.0",
-        author="Clément Pinard",
-        author_email="clement.pinard@ensta-paristech.fr",
-        description="Correlation module for pytorch",
+        name='spatial_correlation_sampler_featurewise',
+        version="0.0.0.1",
+        description="Correlation module for pytorch, featurewise version",
         long_description=long_description,
         long_description_content_type="text/markdown",
-        url="https://github.com/ClementPinard/Pytorch-Correlation-extension",
         install_requires=['torch>=1.1', 'numpy'],
         ext_modules=[
-            Extension('spatial_correlation_sampler_backend',
+            Extension('spatial_correlation_sampler_featurewise_backend',
                       sources,
                       define_macros=macro,
                       extra_compile_args={'cxx': ['-fopenmp'], 'nvcc':[]},
                       extra_link_args=['-lgomp'])
         ],
         package_dir={'': project_root},
-        packages=['spatial_correlation_sampler'],
+        packages=['spatial_correlation_sampler_featurewise'],
+        # packages=find_packages(),
         cmdclass={
             'build_ext': BuildExtension
         },

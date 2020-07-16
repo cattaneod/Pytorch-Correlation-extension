@@ -5,7 +5,7 @@ import argparse
 import time
 
 import torch
-from spatial_correlation_sampler import SpatialCorrelationSampler
+from spatial_correlation_sampler_featurewise import SpatialCorrelationSampler
 from tqdm import trange
 
 TIME_SCALES = {'s': 1, 'ms': 1000, 'us': 1000000}

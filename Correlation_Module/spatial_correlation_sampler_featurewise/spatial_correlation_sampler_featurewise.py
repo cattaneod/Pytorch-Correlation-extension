@@ -3,16 +3,16 @@ from torch.autograd import Function
 from torch.autograd.function import once_differentiable
 from torch.nn.modules.utils import _pair
 
-import spatial_correlation_sampler_backend as correlation
+import spatial_correlation_sampler_featurewise_backend as correlation
 
 
-def spatial_correlation_sample(input1,
-                               input2,
-                               kernel_size=1,
-                               patch_size=1,
-                               stride=1,
-                               padding=0,
-                               dilation_patch=1):
+def spatial_correlation_sample_featurewise(input1,
+                                           input2,
+                                           kernel_size=1,
+                                           patch_size=1,
+                                           stride=1,
+                                           padding=0,
+                                           dilation_patch=1):
     """Apply spatial correlation sampling on from input1 to input2,
 
     Every parameter except input1 and input2 can be either single int
@@ -36,9 +36,12 @@ def spatial_correlation_sample(input1,
         Tensor: Result of correlation sampling
 
     """
-    return SpatialCorrelationSamplerFunction.apply(input1, input2,
-                                                   kernel_size, patch_size,
-                                                   stride, padding, dilation_patch)
+    if kernel_size != 1:
+        raise NotImplementedError("Only kernel=1 is supported right now")
+    else:
+        return SpatialCorrelationSamplerFunction.apply(input1, input2,
+                                                       kernel_size, patch_size,
+                                                       stride, padding, dilation_patch)
 
 
 class SpatialCorrelationSamplerFunction(Function):
@@ -91,6 +94,8 @@ class SpatialCorrelationSampler(nn.Module):
     def __init__(self, kernel_size=1, patch_size=1, stride=1, padding=0, dilation=1, dilation_patch=1):
         super(SpatialCorrelationSampler, self).__init__()
         self.kernel_size = kernel_size
+        if kernel_size != 1:
+            raise NotImplementedError("Only kernel=1 is supported right now")
         self.patch_size = patch_size
         self.stride = stride
         self.padding = padding

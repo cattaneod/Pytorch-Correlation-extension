@@ -2,12 +2,12 @@ import argparse
 import torch
 # torch.set_printoptions(precision=1, threshold=10000)
 from torch.autograd import gradcheck
-from spatial_correlation_sampler import SpatialCorrelationSampler
+from spatial_correlation_sampler_featurewise import SpatialCorrelationSampler
 
 parser = argparse.ArgumentParser()
 parser.add_argument('backend', choices=['cpu', 'cuda'], default='cuda')
 parser.add_argument('-b', '--batch-size', type=int, default=2)
-parser.add_argument('-k', '--kernel-size', type=int, default=3)
+parser.add_argument('-k', '--kernel-size', type=int, default=1)
 parser.add_argument('--patch', type=int, default=3)
 parser.add_argument('--patch_dilation', type=int, default=2)
 parser.add_argument('-c', '--channel', type=int, default=2)
